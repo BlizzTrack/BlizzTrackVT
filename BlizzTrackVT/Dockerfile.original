@@ -7,7 +7,6 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["BlizzTrackVT/BlizzTrackVT.csproj", "BlizzTrackVT/"]
-COPY ["BNetLib/BNetLib.csproj", "BNetLib/"]
 RUN dotnet restore "BlizzTrackVT/BlizzTrackVT.csproj"
 COPY . .
 WORKDIR "/src/BlizzTrackVT"

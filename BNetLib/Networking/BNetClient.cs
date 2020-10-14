@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using BNetLib.Models;
 using BNetLib.Networking.Commands;
 
 namespace BNetLib.Networking
@@ -37,8 +31,6 @@ namespace BNetLib.Networking
             if (ms.CanRead)
             {
                 using var reader = new StreamReader(ms, Encoding.UTF8);
-                var output = Activator.CreateInstance<BNetTools<T>>();
-
                 try
                 {
                     var result = await reader.ReadToEndAsync();
@@ -48,7 +40,7 @@ namespace BNetLib.Networking
                     var boundary = text.FirstOrDefault(x => x.Trim().StartsWith("Content-Type:"))?.Split(';').FirstOrDefault(x => x.Trim().StartsWith("boundary="))?.Split('"')[1].Trim();
                     var data = text.SkipWhile(x => x.Trim() != "--" + boundary).Skip(1).TakeWhile(x => x.Trim() != "--" + boundary).Skip(1);
 
-                    return output.Parse(data);
+                    return BNetTools<T>.Parse(data);
                 }
                 finally
                 {

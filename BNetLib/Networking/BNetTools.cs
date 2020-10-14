@@ -19,10 +19,10 @@ namespace BNetLib.Networking
 
     public class BNetTools<T>
     {
-        private readonly List<Dictionary<string, dynamic>> _values = new List<Dictionary<string, dynamic>>();
-        
-        public (T Value, int Seqn) Parse(IEnumerable<string> lines)
+        public static (T Value, int Seqn) Parse(IEnumerable<string> lines)
         {
+            var dataItems = new List<Dictionary<string, dynamic>>();
+
             var keys = new List<KeyType>();
             var enumerable = lines as string[] ?? lines.ToArray();
             var keysLine = enumerable.Skip(1).Take(1).First();
@@ -67,10 +67,11 @@ namespace BNetLib.Networking
                     lineItem[key.Key] = item == "" ? "versions" : item;
                 }
 
-                _values.Add(lineItem);
+                dataItems.Add(lineItem);
             }
 
-            var ff = JsonConvert.SerializeObject(_values);
+            // FIXME: Make this not relay on json to convert between the objects... This feels wrong
+            var ff = JsonConvert.SerializeObject(dataItems);
 
             return (JsonConvert.DeserializeObject<T>(ff), seqn);
 
