@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -20,6 +22,14 @@ namespace BNetLib.Networking
 
         public async Task<(T Value, int Seqn)> Do<T>(string command)
         {
+            /*
+            TODO: Make this throw an error if the input is not a IEnumerable
+            if (typeof(T) != typeof(List<>))
+            {
+                throw new Exception("Must be List");
+            }
+            */
+
             using var client = new TcpClient();
             await client.ConnectAsync(_serverUrl, 1119);
 

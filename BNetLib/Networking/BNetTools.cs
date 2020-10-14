@@ -17,9 +17,9 @@ namespace BNetLib.Networking
         public string Type { get; }
     }
 
-    public class BNetTools<T>
+    internal static class BNetTools<T>
     {
-        public static (T Value, int Seqn) Parse(IEnumerable<string> lines)
+        internal static (T Value, int Seqn) Parse(IEnumerable<string> lines)
         {
             var dataItems = new List<Dictionary<string, dynamic>>();
 
