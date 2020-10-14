@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "BTVT_Worker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

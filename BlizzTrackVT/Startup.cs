@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BTSharedCore.Data;
+using BTSharedCore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,11 @@ namespace BlizzTrackVT
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.Configure<Mongo.DatabaseSettings>(Configuration.GetSection(nameof(Mongo.DatabaseSettings)));
+            services.AddSingleton<Mongo>();
+
+            services.AddSingleton<Summary>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

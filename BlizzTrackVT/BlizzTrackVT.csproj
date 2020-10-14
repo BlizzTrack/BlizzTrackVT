@@ -13,6 +13,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BNetLib\BNetLib.csproj" />
+    <ProjectReference Include="..\BTSharedCore\BTSharedCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>
