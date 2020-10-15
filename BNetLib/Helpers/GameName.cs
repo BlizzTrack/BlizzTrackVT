@@ -94,6 +94,7 @@ namespace BNetLib.Helpers
             {"z", "Submission"},
             {"cn", "China"},
             {"igr", "Internet Game Room"},
+            {"livetest", "Live Test"},
 
         };
 

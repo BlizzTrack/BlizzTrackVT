@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BlizzTrackVT.Models;
 using BTSharedCore.Data;
-using BTSharedCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -31,7 +28,7 @@ namespace BlizzTrackVT.Pages
         public string File { get; set; }
 
         public PartialConfigDataModel<BTSharedCore.Models.Version> Versions { get; set; } = new PartialConfigDataModel<BTSharedCore.Models.Version>();
-        public BTSharedCore.Models.BGDL BGDL { get; set; }
+        public PartialConfigDataModel<BTSharedCore.Models.BGDL> BGDL { get; set; } = new PartialConfigDataModel<BTSharedCore.Models.BGDL>(); 
         public BTSharedCore.Models.CDN CDN { get; set; }
 
         public ViewGameModel(ILogger<ViewGameModel> logger, Versions versions, CDN cdn, BGDL bgdl)
@@ -80,14 +77,15 @@ namespace BlizzTrackVT.Pages
                     if (Seqn != null)
                     {
 
-                        BGDL = await _bgdl.Get(Product, Seqn.Value);
+                        BGDL.Current = await _bgdl.Get(Product, Seqn.Value);
                     }
                     else
                     {
-                        BGDL = await _bgdl.Latest(Product);
+                        BGDL.Current = await _bgdl.Latest(Product);
                     }
 
-                    if (BGDL == null) return NotFound();
+                    if (BGDL.Current == null) return NotFound();
+                    BGDL.Previous = await _bgdl.Previous(Product, BGDL.Current.Seqn);
                     break;
                 default:
                     return NotFound();

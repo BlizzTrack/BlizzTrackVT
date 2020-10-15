@@ -23,7 +23,7 @@
     </ol>
 </div>
 
-@if (Model.Previous?.Seqn != 0)
+@if (Model.Previous != null && Model.Previous?.Seqn != 0)
 {
     <div class="card card-body bg-dark text-light mb-1 p-0">
         <ol class="breadcrumb bg-dark text-light text-center m-0">
@@ -35,7 +35,12 @@
             <li class="breadcrumb-item active">
                 Previous Sequence:
                 <strong>
-                    @Model.Previous.Seqn
+                    <a  asp-page="/ViewGame"
+                        asp-route-Product="@Model.Current.Product"
+                        asp-route-Seqn="@Model.Previous.Seqn"
+                        asp-route-File="versions">
+                        @Model.Previous.Seqn
+                    </a>
                 </strong>
             </li>
             <li class="breadcrumb-item active">
@@ -57,7 +62,7 @@
 
 @foreach (var item in Model.Current.Value)
 {
-    var last = Model.Previous.Value.FirstOrDefault(x => x.Region == item.Region);
+    var last = Model.Previous?.Value?.FirstOrDefault(x => x.Region == item.Region);
 
     <div class="card card-body view-data bg-dark text-light pt-1 pb-1">
     <div class="card-text">
