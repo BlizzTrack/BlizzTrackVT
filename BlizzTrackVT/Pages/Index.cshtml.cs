@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BlizzTrackVT.Models;
 using BlizzTrackVT.Services;
 using BTSharedCore.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,9 +13,7 @@ namespace BlizzTrackVT.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly Summary _summary;
         private readonly NavigationService _navigationService;
-
-        public BTSharedCore.Models.Summary Summary;
-        public BTSharedCore.Models.Summary PreviousSummary;
+        public GenericHistoryModel<BTSharedCore.Models.Summary> Summary { get; } = new GenericHistoryModel<BTSharedCore.Models.Summary>();
 
         public Dictionary<string, List<BNetLib.Models.Summary>> Games;
 
@@ -25,12 +24,20 @@ namespace BlizzTrackVT.Pages
             _navigationService = navigationService;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? seqn = null)
         {
-            Summary = await _summary.Latest();
-            PreviousSummary = await _summary.Previous(string.Empty, Summary.Seqn);
+            var latest = await _summary.Latest();
+            Summary.Current = latest;
+            Summary.Latest = latest;
 
-           Games = _navigationService.Create(Summary.Value);
+            if (seqn != null)
+            {
+                Summary.Current = await _summary.Get(string.Empty, seqn.Value) ?? latest;
+            }
+
+            Summary.Previous = await _summary.Previous(string.Empty, Summary.Current.Seqn);
+
+           Games = _navigationService.Create(Summary.Current.Value);
         }
     }
 }

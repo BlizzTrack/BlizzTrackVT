@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BNetLib.Networking;
@@ -16,15 +18,25 @@ namespace BTVT_Worker.Workers
         private readonly ILogger<SummaryWorker> _logger;
         private readonly BNetClient _bNetClient;
         private readonly Summary _summary;
+        private readonly ConcurrentQueue<BNetLib.Models.Summary> _queue;
+
+        private readonly Versions _versions;
+        private readonly BGDL _bgdl;
+        private readonly CDN _cdn;
+
         private CancellationToken _cancellationToken;
         private bool _running;
 
-        public SummaryWorker(IHostApplicationLifetime appLifetime, ILogger<SummaryWorker> logger, BNetClient bNetClient, Summary summary)
+        public SummaryWorker(IHostApplicationLifetime appLifetime, ILogger<SummaryWorker> logger, BNetClient bNetClient, Summary summary, ConcurrentQueue<BNetLib.Models.Summary> queue, Versions versions, BGDL bgdl, CDN cdn)
         {
             _appLifetime = appLifetime;
             _logger = logger;
             _bNetClient = bNetClient;
             _summary = summary;
+            _queue = queue;
+            _versions = versions;
+            _bgdl = bgdl;
+            _cdn = cdn;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -65,6 +77,19 @@ namespace BTVT_Worker.Workers
                                 Value = values
                             });
                         }
+
+                        foreach (var item in values)
+                        {
+                            var previous = localLatest?.Value?.FirstOrDefault(x =>
+                                x.Product == item.Product && x.Flags == item.Flags);
+
+                            var exist = await ItemExist(item);
+
+                            if (!exist || previous == null || previous.Seqn != item.Seqn)
+                            {
+                                _queue.Enqueue(item);
+                            }
+                        }
                     }
                     catch
                     {
@@ -85,6 +110,24 @@ namespace BTVT_Worker.Workers
         private void OnStopped()
         {
             _logger.LogInformation("OnStopped has been called.");
+        }
+
+        private async Task<bool> ItemExist(BNetLib.Models.Summary item)
+        {
+            switch (item.Flags.ToLower())
+            {
+                case "cdn":
+                    var c = await _cdn.Get(item.Product.ToLower(), item.Seqn);
+                    return c != null;
+                case "versions":
+                    var v = await _versions.Get(item.Product.ToLower(), item.Seqn);
+                    return v != null;
+                case "bgdl":
+                    var b = await _bgdl.Get(item.Product.ToLower(), item.Seqn);
+                    return b != null;
+            }
+
+            return false;
         }
     }
 }

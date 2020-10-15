@@ -27,8 +27,8 @@ namespace BlizzTrackVT.Pages
         [BindProperty(SupportsGet = true)]
         public string File { get; set; }
 
-        public PartialConfigDataModel<BTSharedCore.Models.Version> Versions { get; set; } = new PartialConfigDataModel<BTSharedCore.Models.Version>();
-        public PartialConfigDataModel<BTSharedCore.Models.BGDL> BGDL { get; set; } = new PartialConfigDataModel<BTSharedCore.Models.BGDL>(); 
+        public GenericHistoryModel<BTSharedCore.Models.Version> Versions { get; set; } = new GenericHistoryModel<BTSharedCore.Models.Version>();
+        public GenericHistoryModel<BTSharedCore.Models.BGDL> BGDL { get; set; } = new GenericHistoryModel<BTSharedCore.Models.BGDL>(); 
         public BTSharedCore.Models.CDN CDN { get; set; }
 
         public ViewGameModel(ILogger<ViewGameModel> logger, Versions versions, CDN cdn, BGDL bgdl)
@@ -56,6 +56,8 @@ namespace BlizzTrackVT.Pages
                     if (CDN == null) return NotFound();
                     break;
                 case "versions":
+                    Versions.Latest = await _versions.Latest(Product);
+
                     if (Seqn != null)
                     {
                         Versions.Current = await _versions.Get(Product, Seqn.Value);
@@ -74,6 +76,7 @@ namespace BlizzTrackVT.Pages
                                         };
                     break;
                 case "bgdl":
+                    BGDL.Latest = await _bgdl.Latest(Product);
                     if (Seqn != null)
                     {
 

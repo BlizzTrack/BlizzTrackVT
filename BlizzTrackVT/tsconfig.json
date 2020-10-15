@@ -4,7 +4,7 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
+    "target": "es2018",
     "module": "es6",
     "jsx": "react",
     "allowJs": true,
@@ -14,14 +14,10 @@
     "outDir": "./dist/"
   },
   "lib": [
-    "dom",
-    "es5",
-    "es2015.promise",
-    "dom.iterable",
-    "esnext"
+    "dom"
   ],
   "types": [
-    "node",
+    "node"
   ],
 
   "exclude": [

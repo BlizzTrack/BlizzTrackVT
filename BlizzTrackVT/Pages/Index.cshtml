@@ -5,36 +5,45 @@
 }
 
 <h1 class="display-4 text-center text-light">Welcome</h1>
+@if (Model.Summary.Current.Seqn != Model.Summary.Latest.Seqn)
+{
+    <div class="alert alert-dark text-center">
+        You can view the latest Sequence (<strong>@Model.Summary.Latest.Seqn</strong>) by <a asp-page="/Index">click here</a>.
+    </div>
+}
 <div class="card card-body bg-dark text-light mb-1 p-0">
     <ol class="breadcrumb bg-dark text-light text-center m-0">
         <li class="breadcrumb-item active">
             Current Sequence: <strong>
-                @Model.Summary.Seqn
+                @Model.Summary.Current.Seqn
             </strong>
         </li>
         <li class="breadcrumb-item active">
             Archived: 
             <strong>
-                @Model.Summary.Id?.CreationTime.ToUniversalTime() UTC
+                @Model.Summary.Current.Id?.CreationTime.ToUniversalTime() UTC
             </strong>
         </li>
     </ol>
 </div>
 
-@if (Model.PreviousSummary != null)
+@if (Model.Summary.Previous != null)
 {
     <div class="card card-body bg-dark text-light mb-1 p-0">
         <ol class="breadcrumb bg-dark text-light text-center m-0">
             <li class="breadcrumb-item active">
                 Previous Sequence:
                 <strong>
-                    @Model.PreviousSummary.Seqn
+                    <a  asp-page="/Index"
+                        asp-route-seqn="@Model.Summary.Previous.Seqn">
+                        @Model.Summary.Previous.Seqn
+                    </a>
                 </strong>
             </li>
             <li class="breadcrumb-item active">
                 Archived:
                 <strong>
-                    @Model.PreviousSummary.Id?.CreationTime.ToUniversalTime() UTC
+                    @Model.Summary.Previous.Id?.CreationTime.ToUniversalTime() UTC
                 </strong>
             </li>
         </ol>
@@ -69,7 +78,7 @@
                                 continue;
                             }
 
-                            var last = Model.PreviousSummary?.Value?.FirstOrDefault(x => x.Product == item.Product && x.Flags == item.Flags);
+                            var last = Model.Summary.Previous?.Value?.FirstOrDefault(x => x.Product == item.Product && x.Flags == item.Flags);
 
                             <tr>
                                 <td>

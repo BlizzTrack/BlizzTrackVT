@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Concurrent;
+using System.IO;
 using System.Threading.Tasks;
+using BNetLib.Models;
 using BTSharedCore.Services;
 using BTVT_Worker.Workers;
 using Microsoft.Extensions.Configuration;
@@ -38,12 +40,19 @@ namespace BTVT_Worker
                     services.AddSingleton<BTSharedCore.Data.CDN>();
                     services.AddSingleton<BTSharedCore.Data.BGDL>();
 
+                    // This lets us make adding new versions faster
+                    services.AddSingleton<ConcurrentQueue<Summary>>();
+
                     services.AddSingleton(x => new BNetLib.Networking.BNetClient());
 
                     services.AddHostedService<SummaryWorker>();
+                    services.AddHostedService<QueueWorker>();
+
+                    /*
                     services.AddHostedService<VersionWorker>();
                     services.AddHostedService<CDNWorker>();
                     services.AddHostedService<BGDLWorker>();
+                    */
                 })
                 .ConfigureLogging((hostingContext, logging) =>
                 {

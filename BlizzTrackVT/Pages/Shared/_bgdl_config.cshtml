@@ -1,9 +1,19 @@
-﻿@model BlizzTrackVT.Models.PartialConfigDataModel<BTSharedCore.Models.BGDL>
+﻿@model BlizzTrackVT.Models.GenericHistoryModel<BTSharedCore.Models.BGDL>
+
+@if (Model.Current.Seqn != Model.Latest.Seqn)
+{
+    <div class="alert alert-dark text-center">
+        You can view the latest Sequence (<strong>@Model.Latest.Seqn</strong>) by <a asp-page="/ViewGame"
+                                                                                     asp-route-Product="@Model.Latest.Product"
+                                                                                     asp-route-Seqn="@Model.Latest.Seqn"
+                                                                                     asp-route-File="versions">click here</a>.
+    </div>
+}
 
 <div class="card card-body bg-dark text-light mb-1 p-0">
     <ol class="breadcrumb bg-dark text-light text-center m-0">
         <li class="breadcrumb-item active">
-            File: 
+            File:
             <strong>
                 BGDL
             </strong>
@@ -28,7 +38,7 @@
     <div class="card card-body bg-dark text-light mb-1 p-0">
         <ol class="breadcrumb bg-dark text-light text-center m-0">
             <li class="breadcrumb-item active">
-                File: 
+                File:
                 <strong>
                     BGDL
                 </strong>
@@ -36,10 +46,10 @@
             <li class="breadcrumb-item active">
                 Previous Sequence:
                 <strong>
-                    <a  asp-page="/ViewGame"
-                        asp-route-Product="@Model.Current.Product"
-                        asp-route-Seqn="@Model.Previous.Seqn"
-                        asp-route-File="bgdl">
+                    <a asp-page="/ViewGame"
+                       asp-route-Product="@Model.Current.Product"
+                       asp-route-Seqn="@Model.Previous.Seqn"
+                       asp-route-File="bgdl">
                         @Model.Previous.Seqn
                     </a>
                 </strong>
@@ -66,91 +76,10 @@
     var last = Model.Previous?.Value?.FirstOrDefault(x => x.Region == item.Region);
 
     <div class="card card-body view-data bg-dark text-light pt-1 pb-1">
-    <div class="card-text">
-        <div>
-            <div class="row p-1">
-                @if (last != null && item.Buildconfig != last.Buildconfig)
-                {
-                    <div>
-                        <i class="fa fa-arrow-up"></i>
-                    </div>
-                }
-                else
-                {
-                    <div>
-                        <i class="fa fa-minus"></i>
-                    </div>
-                }
-                <div class="col-3">@nameof(item.Buildconfig)</div>
-                <div class="col font-weight-bold">
-                    @item.Buildconfig
-                </div>
-                
-                @if (last != null && item.Buildconfig != last.Buildconfig)
-                {
-                    <div class="col text-danger">
-                        @last.Buildconfig
-                    </div>
-                }
-
-            </div>
-
-            <div class="row p-1">
-                @if (last != null && item.Buildid != last.Buildid)
-                {
-                    <div>
-                        <i class="fa fa-arrow-up"></i>
-                    </div>
-                }
-                else
-                {
-                    <div>
-                        <i class="fa fa-minus"></i>
-                    </div>
-                }
-
-                <div class="col-3">@nameof(item.Buildid)</div>
-                <div class="col font-weight-bold">@item.Buildid</div>
-                
-                @if (last != null && item.Buildid != last.Buildid)
-                {
-                    <div class="col text-danger">
-                        @last.Buildid
-                    </div>
-                }
-
-            </div>
-
-            <div class="row p-1">
-                @if (last != null && item.Cdnconfig != last.Cdnconfig)
-                {
-                    <div>
-                        <i class="fa fa-arrow-up"></i>
-                    </div>
-                }
-                else
-                {
-                    <div>
-                        <i class="fa fa-minus"></i>
-                    </div>
-                }
-
-                <div class="col-3">@nameof(item.Cdnconfig)</div>
-                <div class="col font-weight-bold">@item.Cdnconfig</div>
-                
-                @if (last != null && item.Cdnconfig != last.Cdnconfig)
-                {
-                    <div class="col text-danger">
-                        @last.Cdnconfig
-                    </div>
-                }
-
-            </div>
-
-            <div class="row p-1">
-                @if (last != null && item.Keyring != last.Keyring)
-                {
-                    if (last.Keyring != "versions")
+        <div class="card-text">
+            <div>
+                <div class="row p-1">
+                    @if (last != null && item.Buildconfig != last.Buildconfig)
                     {
                         <div>
                             <i class="fa fa-arrow-up"></i>
@@ -162,39 +91,120 @@
                             <i class="fa fa-minus"></i>
                         </div>
                     }
-                }
-                else
-                {
-                    <div>
-                        <i class="fa fa-minus"></i>
+                    <div class="col-3">@nameof(item.Buildconfig)</div>
+                    <div class="col font-weight-bold">
+                        @item.Buildconfig
                     </div>
-                }
 
-
-                <div class="col-3">@nameof(item.Keyring)</div>
-                @if (item.Keyring.Length == 0 || item.Keyring == "versions")
-                {
-                    <div class="col font-weight-bold">N/A</div>
-                }
-                else
-                {
-                    <div class="col font-weight-bold">@item.Keyring</div>
-                }
-                
-                @if (last != null && item.Keyring != last.Keyring)
-                {
-                    if (last.Keyring != "versions")
+                    @if (last != null && item.Buildconfig != last.Buildconfig)
                     {
                         <div class="col text-danger">
-                            @last.Keyring
+                            @last.Buildconfig
                         </div>
                     }
 
-                }
+                </div>
 
-            </div>
+                <div class="row p-1">
+                    @if (last != null && item.Buildid != last.Buildid)
+                    {
+                        <div>
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <i class="fa fa-minus"></i>
+                        </div>
+                    }
 
-            <div class="row p-1">
+                    <div class="col-3">@nameof(item.Buildid)</div>
+                    <div class="col font-weight-bold">@item.Buildid</div>
+
+                    @if (last != null && item.Buildid != last.Buildid)
+                    {
+                        <div class="col text-danger">
+                            @last.Buildid
+                        </div>
+                    }
+
+                </div>
+
+                <div class="row p-1">
+                    @if (last != null && item.Cdnconfig != last.Cdnconfig)
+                    {
+                        <div>
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <i class="fa fa-minus"></i>
+                        </div>
+                    }
+
+                    <div class="col-3">@nameof(item.Cdnconfig)</div>
+                    <div class="col font-weight-bold">@item.Cdnconfig</div>
+
+                    @if (last != null && item.Cdnconfig != last.Cdnconfig)
+                    {
+                        <div class="col text-danger">
+                            @last.Cdnconfig
+                        </div>
+                    }
+
+                </div>
+
+                <div class="row p-1">
+                    @if (last != null && item.Keyring != last.Keyring)
+                    {
+                        if (last.Keyring != "versions")
+                        {
+                            <div>
+                                <i class="fa fa-arrow-up"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <i class="fa fa-minus"></i>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <i class="fa fa-minus"></i>
+                        </div>
+                    }
+
+
+                    <div class="col-3">@nameof(item.Keyring)</div>
+                    @if (item.Keyring.Length == 0 || item.Keyring == "versions")
+                    {
+                        <div class="col font-weight-bold">N/A</div>
+                    }
+                    else
+                    {
+                        <div class="col font-weight-bold">@item.Keyring</div>
+                    }
+
+                    @if (last != null && item.Keyring != last.Keyring)
+                    {
+                        if (last.Keyring != "versions")
+                        {
+                            <div class="col text-danger">
+                                @last.Keyring
+                            </div>
+                        }
+
+                    }
+
+                </div>
+
+                <div class="row p-1">
                     @if (last != null && item.Region != last.Region)
                     {
                         <div>
@@ -210,66 +220,66 @@
 
                     <div class="col-3">@nameof(item.Region)</div>
                     <div class="col font-weight-bold">@item.Region</div>
-                    
+
                     @if (last != null && item.Region != last.Region)
                     {
                         <div class="col text-danger">
                             @last.Region
                         </div>
                     }
-            </div>
+                </div>
 
-            <div class="row p-1">
-                @if (last != null && item.Versionsname != last.Versionsname)
-                {
-                    <div>
-                        <i class="fa fa-arrow-up"></i>
-                    </div>
-                }
-                else
-                {
-                    <div>
-                        <i class="fa fa-minus"></i>
-                    </div>
-                }
+                <div class="row p-1">
+                    @if (last != null && item.Versionsname != last.Versionsname)
+                    {
+                        <div>
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <i class="fa fa-minus"></i>
+                        </div>
+                    }
 
-                <div class="col-3">@nameof(item.Versionsname)</div>
-                <div class="col font-weight-bold">@item.Versionsname</div>
-                
-                @if (last != null && item.Versionsname != last.Versionsname)
-                {
-                    <div class="col text-danger">
-                        @last.Versionsname
-                    </div>
-                }
+                    <div class="col-3">@nameof(item.Versionsname)</div>
+                    <div class="col font-weight-bold">@item.Versionsname</div>
 
-            </div>
+                    @if (last != null && item.Versionsname != last.Versionsname)
+                    {
+                        <div class="col text-danger">
+                            @last.Versionsname
+                        </div>
+                    }
 
-            <div class="row p-1">
-                @if (last != null && item.Productconfig != last.Productconfig)
-                {
-                    <div>
-                        <i class="fa fa-arrow-up"></i>
-                    </div>
-                }
-                else
-                {
-                    <div>
-                        <i class="fa fa-minus"></i>
-                    </div>
-                }
-                <div class="col-3">@nameof(item.Productconfig)</div>
-                <div class="col font-weight-bold">@item.Productconfig</div>
+                </div>
 
-                @if (last != null && item.Productconfig != last.Productconfig)
-                {
-                    <div class="col text-danger">
-                        @last.Productconfig
-                    </div>
-                }
-            </div>
+                <div class="row p-1">
+                    @if (last != null && item.Productconfig != last.Productconfig)
+                    {
+                        <div>
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <i class="fa fa-minus"></i>
+                        </div>
+                    }
+                    <div class="col-3">@nameof(item.Productconfig)</div>
+                    <div class="col font-weight-bold">@item.Productconfig</div>
+
+                    @if (last != null && item.Productconfig != last.Productconfig)
+                    {
+                        <div class="col text-danger">
+                            @last.Productconfig
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-    }
+}
 }
