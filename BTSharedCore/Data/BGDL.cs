@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BTSharedCore.Services;
 using MongoDB.Driver;
 
@@ -19,6 +18,11 @@ namespace BTSharedCore.Data
         public override async Task<Models.BGDL> Latest(string product)
         {
             return await Collection.Find(x => x.Product.ToLower() == product.ToLower()).SortByDescending(x => x.Id).FirstOrDefaultAsync();
+        }
+
+        public override async Task<Models.BGDL> Previous(string product, int current)
+        {
+            return await Collection.Find(x => x.Product.ToLower() == product.ToLower() && x.Seqn != current).SortByDescending(x => x.Id).FirstOrDefaultAsync();
         }
 
         public override async Task Insert(params Models.BGDL[] item)

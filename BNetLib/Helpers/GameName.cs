@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace BNetLib.Helpers
+{
+    /*
+     Prefixes = map[string]string{
+        "pro"},      "Overwatch"},
+        "wow"},      "World of Warcraft"},
+        "d3"},       "Diablo III"},
+        "hero"},     "Heroes of the Storm"},
+        "storm"},    "Heroes of the Storm (Deprecated)"},
+        "dst2"},     "Destiny 2"},
+        "s1"},       "Starcraft, Remastered"},
+        "s2"},       "Starcraft II"},
+        "w3"},       "Warcraft III"},
+        "agent"},    "Battle.net Agent"},
+        "bna"},      "Battle.net App"},
+        "bts"},      "Bootstrapper"},
+        "catalogs"}, "Game Catalog"},
+        "hs"},       "Hearthstone"},
+        "viper"},    "Call of Duty, Black Ops 4"},
+        "odin"},     "Call of Duty, Modern Warfare"},
+        "lazr"},     "Call of Duty, Modern Warfare 2"},
+        "zeus"},     "Call of Duty, Black Ops Cold War"},
+        "fenris"},   "Diablo IV"},
+    }
+
+     */
+    public static class GameName
+    {
+        private static Dictionary<string, string> Prefix = new Dictionary<string, string>()
+        {
+            {"proloc", "Overwatch 2"},
+            {"pro", "Overwatch"},
+            {"wowclassic", "World of Warcraft Classic"},
+            {"wow", "World of Warcraft"},
+            {"d3", "Diablo III"},
+            {"hero", "Heroes of the Storm"},
+            {"storm", "Heroes of the Storm (Deprecated)"},
+            {"dst2", "Destiny 2"},
+            {"s1", "Starcraft Remastered"},
+            {"s2", "Starcraft II"},
+            {"w3", "Warcraft III"},
+            {"agent", "Battle.net Agent"},
+            {"bna", "Battle.net App"},
+            {"bts", "Bootstrapper"},
+            {"catalogs", "Game Catalog"},
+            {"hs", "Hearthstone"},
+            {"viper", "Call of Duty Black Ops 4"},
+            {"odin", "Call of Duty Modern Warfare"},
+            {"lazr", "Call of Duty Modern Warfare 2"},
+            {"zeus", "Call of Duty Black Ops Cold War"},
+            {"fenris", "Diablo IV"},
+        };
+
+        private static Dictionary<string, string> Suffix = new Dictionary<string, string>()
+        {
+            {"t", "PTR"},
+            {"ptr", "PTR"},
+            {"beta", "Beta"},
+            {"classic", "Classic"},
+            {"dev", "Dev"},
+            {"a", "Alpha"},
+            {"demo", "Demo"},
+            {"c", "Tournament"},
+            {"ceu", "Tournament (EU)"},
+            {"ckr", "Tournament (KR)"},
+            {"ccn", "Tournament (CN)"},
+            {"c2", "Tournament 2"},
+            {"c2eu", "Tournament 2 (EU)"},
+            {"c2kr", "Tournament 2 (KR)"},
+            {"c2cn", "Tournament 2 (CN)"},
+            {"c3", "Tournament 3"},
+            {"c3eu", "Tournament 3 (EU)"},
+            {"c3kr", "Tournament 3 (KR)"},
+            {"c3cn", "Tournament 3 (CN)"},
+            {"cr", "Tournament Viewer"},
+            {"cr1", "Tournament Viewer 1"},
+            {"cr2", "Tournament Viewer 2"},
+            {"cr3", "Tournament Viewer 3"},
+            {"v", "Vendor"},
+            {"v1", "Vendor 1"},
+            {"v2", "Vendor 2"},
+            {"v3", "Vendor 3"},
+            {"v4", "Vendor 4"},
+            {"v5", "Vendor 5"},
+            {"v6", "Vendor 6"},
+            {"v7", "Vendor 7"},
+            {"v8", "Vendor 8"},
+            {"v9", "Vendor 9"},
+            {"v10", "Vendor 10"},
+            {"v11", "Vendor 11"},
+            {"v12", "Vendor 12"},
+            {"v13", "Vendor 13"},
+            {"v14", "Vendor 14"},
+            {"v15", "Vendor 15"},
+            {"vendor", "Vendor"},
+            {"vendor2", "Vendor 2"},
+            {"ms", "World Cup Viewer"},
+            {"b", "Beta"},
+            {"e", "Event"},
+            {"e1", "Event 1"},
+            {"e2", "Event 2"},
+            {"e3", "Event 3"},
+            {"e4", "Event 4"},
+            {"e5", "Event 5"},
+            {"e6", "Event 6"},
+            {"e7", "Event 7"},
+            {"e8", "Event 8"},
+            {"e9", "Event 9"},
+            {"e10", "Event 10"},
+            {"z", "Submission"},
+            {"cn", "China"},
+            {"igr", "Internet Game Room"},
+
+        };
+
+        public static string GetGameName(string code)
+        {
+            code = code.ToLower().Replace("_", "");
+            switch (code)
+            {
+                case "hsb":
+                    return Prefix["hs"];
+                case "hsc":
+                    return Prefix["hs"] + " " + Suffix["c"];
+            }
+
+            var name = "";
+
+            
+            foreach (var (s, value1) in Prefix)
+            {
+                if (!code.StartsWith(s)) continue;
+                name += value1;
+
+                code = code.TrimStart(s.ToCharArray());
+                foreach (var (key, value) in Suffix)
+                {
+                    if (code.Equals(key, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        name += " " + value;
+                        break;
+                    }
+                }
+
+                break;
+            }
+
+            return name;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+﻿@page "/v/{Product}/{File}/{Seqn:int}"
+@model BlizzTrackVT.Pages.ViewGameModel
+
+@{
+    ViewData["Title"] = $"Viewing {BNetLib.Helpers.GameName.GetGameName(Model.Product)} {RouteData.Values["File"]} config";
+}
+
+@{
+    switch (Model.File.ToLower())
+    {
+        case "cdn":
+            await Html.RenderPartialAsync($"_cdn_config", Model.CDN);
+            break;
+        case "versions":
+            await Html.RenderPartialAsync($"_version_config", Model.Versions);
+            break;
+        case "bgdl":
+            await Html.RenderPartialAsync($"_bgdl_config", Model.BGDL);
+            break;
+    }
+}

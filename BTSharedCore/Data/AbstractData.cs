@@ -17,6 +17,7 @@ namespace BTSharedCore.Data
 
         public abstract Task<T> Get(string product, int seqn);
         public abstract Task<T> Latest(string product);
+        public abstract Task<T> Previous(string product, int current);
         public abstract Task Insert(params T[] item);
     }
 }

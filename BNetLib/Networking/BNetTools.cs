@@ -25,6 +25,8 @@ namespace BNetLib.Networking
 
             var keys = new List<KeyType>();
             var enumerable = lines as string[] ?? lines.ToArray();
+            if (!enumerable.Any()) return (default, 0);
+
             var keysLine = enumerable.Skip(1).Take(1).First();
             var seqn = 0;
 

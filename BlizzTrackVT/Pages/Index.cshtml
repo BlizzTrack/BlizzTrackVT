@@ -4,7 +4,88 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="display-4 text-center text-light">Welcome</h1>
+<div class="card card-body bg-dark text-light mb-1 p-0">
+    <ol class="breadcrumb bg-dark text-light text-center m-0">
+        <li class="breadcrumb-item active">
+            Current Sequence: <strong>
+                @Model.Summary.Seqn
+            </strong>
+        </li>
+        <li class="breadcrumb-item active">
+            Archived: 
+            <strong>
+                @Model.Summary.Id?.CreationTime.ToUniversalTime() UTC
+            </strong>
+        </li>
+    </ol>
 </div>
+
+@if (Model.PreviousSummary != null)
+{
+    <div class="card card-body bg-dark text-light mb-1 p-0">
+        <ol class="breadcrumb bg-dark text-light text-center m-0">
+            <li class="breadcrumb-item active">
+                Previous Sequence:
+                <strong>
+                    @Model.PreviousSummary.Seqn
+                </strong>
+            </li>
+            <li class="breadcrumb-item active">
+                Archived:
+                <strong>
+                    @Model.PreviousSummary.Id?.CreationTime.ToUniversalTime() UTC
+                </strong>
+            </li>
+        </ol>
+    </div>
+}
+
+<table class="table table-dark text-center" style="border-radius: .25rem;">
+    <thead>
+    <tr>
+        <th scope="col" style="border-top: 0"><i class="fa fa-edit"></i></th>
+        <th scope="col" style="border-top: 0">#</th>
+        <th scope="col" style="border-top: 0">Product</th>
+        <th scope="col" style="border-top: 0">Flags</th>
+        <th scope="col" style="border-top: 0">Options</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Summary.Value)
+    {
+        var last = Model.PreviousSummary?.Value?.FirstOrDefault(x => x.Product == item.Product && x.Flags == item.Flags);
+
+        <tr>
+            <td>
+                @if (last != null && last.Seqn != item.Seqn)
+                {
+                    <i class="fa fa-arrow-up"></i>
+                }
+                else if (last == null)
+                {
+                    <i class="fa fa-plus"></i>
+                }
+                else
+                {
+                    <i class="fa fa-minus"></i>
+                }
+            </td>
+            <td class="text-center">
+                @item.Seqn
+            </td>
+            <td data-code="@item.Product">@BNetLib.Helpers.GameName.GetGameName(item.Product)</td>
+            <td>@item.Flags</td>
+            <td>
+                <a class="btn btn-outline-light btn-sm"
+                   asp-page="/ViewGame"
+                   asp-route-Product="@item.Product"
+                   asp-route-Seqn="@item.Seqn"
+                   asp-route-File="@item.Flags">
+                    View Config
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

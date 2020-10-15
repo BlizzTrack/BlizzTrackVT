@@ -1,0 +1,82 @@
+﻿@model BTSharedCore.Models.BGDL
+
+<div class="card card-body bg-dark mb-1 p-0">
+    <ol class="breadcrumb bg-dark text-light text-center m-0">
+        <li class="breadcrumb-item active">
+            File: <strong>
+                BGDL
+            </strong>
+        </li>
+        <li class="breadcrumb-item active">
+            Sequence:
+            <strong>
+                @Model.Seqn
+            </strong>
+        </li>
+        <li class="breadcrumb-item active">
+            Archived:
+            <strong>
+                @Model.Id?.CreationTime.ToUniversalTime() UTC
+            </strong>
+        </li>
+    </ol>
+</div>
+    
+@if (Model.Value.Count == 0)
+{
+    <div class="text-center alert alert-danger">
+        This sequence doesn't contain any information.
+    </div>
+}
+
+@foreach (var item in Model.Value)
+{
+    <div class="card card-body view-data bg-dark text-light pt-1 pb-1">
+        <div class="card-text">
+            <div>
+                <div class="row">
+                    <div class="col-3">@nameof(item.Buildconfig)</div>
+                    <div class="col">@item.Buildconfig</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">@nameof(item.Buildid)</div>
+                    <div class="col">@item.Buildid</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">@nameof(item.Cdnconfig)</div>
+                    <div class="col">@item.Cdnconfig</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">@nameof(item.Keyring)</div>
+                    @if (item.Keyring.Length == 0 || item.Keyring == "versions")
+                    {
+                        <div class="col">N/A</div>
+                    }
+                    else
+                    {
+                        <div class="col">@item.Keyring</div>
+                    }
+
+                </div>
+           
+                <div class="row">
+                    <div class="col-3">@nameof(item.Region)</div>
+                    <div class="col">@item.Region</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">@nameof(item.Versionsname)</div>
+                    <div class="col">@item.Versionsname</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">@nameof(item.Productconfig)</div>
+                    <div class="col">@item.Productconfig</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

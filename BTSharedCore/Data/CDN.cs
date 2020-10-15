@@ -21,6 +21,11 @@ namespace BTSharedCore.Data
             return await Collection.Find(x => x.Product.ToLower() == product.ToLower()).SortByDescending(x => x.Id).FirstOrDefaultAsync();
         }
 
+        public override async Task<Models.CDN> Previous(string product, int current)
+        {
+            return await Collection.Find(x => x.Product.ToLower() == product.ToLower() && x.Seqn != current).SortByDescending(x => x.Id).FirstOrDefaultAsync();
+        }
+
         public override async Task Insert(params Models.CDN[] item)
         {
             await Collection.InsertManyAsync(item);

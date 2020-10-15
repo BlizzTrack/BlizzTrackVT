@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BTSharedCore.Data;
 using BTSharedCore.Services;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +25,11 @@ namespace BlizzTrackVT
             services.Configure<Mongo.DatabaseSettings>(Configuration.GetSection(nameof(Mongo.DatabaseSettings)));
             services.AddSingleton<Mongo>();
 
+
+            services.AddSingleton<Versions>();
             services.AddSingleton<Summary>();
+            services.AddSingleton<CDN>();
+            services.AddSingleton<BGDL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

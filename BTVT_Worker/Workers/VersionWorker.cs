@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BNetLib.Networking;
 using BNetLib.Networking.Commands;
 using BTSharedCore.Data;
-using BTSharedCore.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Summary = BTSharedCore.Data.Summary;
@@ -66,6 +65,7 @@ namespace BTVT_Worker.Workers
                             var latestVersion = await _versions.Latest(item.Product);
                             if (latestVersion?.Seqn != item.Seqn)
                             {
+                                _logger.LogInformation($"Inserting version for {item.Product}");
                                 var (value, seqn) = await _bNetClient.Do<List<BNetLib.Models.Version>>(
                                     new VersionCommand(item.Product.ToLower()));
 
@@ -78,8 +78,9 @@ namespace BTVT_Worker.Workers
                             }
                         }
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        _logger.LogError($"{ex}");
                         // ignored
                     }
 

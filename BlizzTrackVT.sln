@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlizzTrackVT", "BlizzTrackVT\BlizzTrackVT.csproj", "{7486902B-06FD-4651-A5A6-EBEA468084AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzTrackVT", "BlizzTrackVT\BlizzTrackVT.csproj", "{7486902B-06FD-4651-A5A6-EBEA468084AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BNetLib", "BNetLib\BNetLib.csproj", "{6AEC7305-2E7F-4D13-972D-9A136B6066A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BNetLib", "BNetLib\BNetLib.csproj", "{6AEC7305-2E7F-4D13-972D-9A136B6066A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{11AF1AAA-468E-4BD4-A34B-DEC0213DA931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTSharedCore", "BTSharedCore\BTSharedCore.csproj", "{DFCBE470-97E3-42A8-8047-B483C2F9DFF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTSharedCore", "BTSharedCore\BTSharedCore.csproj", "{DFCBE470-97E3-42A8-8047-B483C2F9DFF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTVT_Worker", "BTVT_Worker\BTVT_Worker.csproj", "{BDAEBF4F-0558-4E9B-A6A0-82A509F9827F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTVT_Worker", "BTVT_Worker\BTVT_Worker.csproj", "{BDAEBF4F-0558-4E9B-A6A0-82A509F9827F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44A58D94-DDAF-455A-84D3-1C8EE43AB406}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

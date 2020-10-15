@@ -1,0 +1,57 @@
+﻿@model BTSharedCore.Models.CDN
+
+<div class="card card-body bg-dark mb-1 p-0">
+    <ol class="breadcrumb bg-dark text-light  text-center m-0">
+        <li class="breadcrumb-item active">
+            File: <strong>
+                CDN
+            </strong>
+        </li>
+        <li class="breadcrumb-item active">
+            Sequence:
+            <strong>
+                @Model.Seqn
+            </strong>
+        </li>
+        <li class="breadcrumb-item active">
+            Archived:
+            <strong>
+                @Model.Id?.CreationTime.ToUniversalTime() UTC
+            </strong>
+        </li>
+    </ol>
+</div>
+
+@foreach (var item in Model.Value)
+{
+    <div class="card card-body view-data bg-dark text-light pt-1 pb-1">
+        <div class="card-text">
+            <div>
+                <div class="row">
+                    <div class="col-3">@nameof(item.Name)</div>
+                    <div class="col">@item.Name</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">@nameof(item.Path)</div>
+                    <div class="col">@item.Path</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">@nameof(item.Hosts)</div>
+                    <div class="col">@item.Hosts</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">@nameof(item.Servers)</div>
+                    <div class="col">@item.Servers</div>
+                </div>
+           
+                <div class="row">
+                    <div class="col-3">@nameof(item.ConfigPath)</div>
+                    <div class="col">@item.ConfigPath</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
