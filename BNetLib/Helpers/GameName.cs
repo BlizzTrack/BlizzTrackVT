@@ -29,32 +29,7 @@ namespace BNetLib.Helpers
      */
     public static class GameName
     {
-        private static Dictionary<string, string> Prefix = new Dictionary<string, string>()
-        {
-            {"proloc", "Overwatch 2"},
-            {"pro", "Overwatch"},
-            {"wowclassic", "World of Warcraft Classic"},
-            {"wow", "World of Warcraft"},
-            {"d3", "Diablo III"},
-            {"hero", "Heroes of the Storm"},
-            {"storm", "Heroes of the Storm (Deprecated)"},
-            {"dst2", "Destiny 2"},
-            {"s1", "Starcraft Remastered"},
-            {"s2", "Starcraft II"},
-            {"w3", "Warcraft III"},
-            {"agent", "Battle.net Agent"},
-            {"bna", "Battle.net App"},
-            {"bts", "Bootstrapper"},
-            {"catalogs", "Game Catalog"},
-            {"hs", "Hearthstone"},
-            {"viper", "Call of Duty Black Ops 4"},
-            {"odin", "Call of Duty Modern Warfare"},
-            {"lazr", "Call of Duty Modern Warfare 2"},
-            {"zeus", "Call of Duty Black Ops Cold War"},
-            {"fenris", "Diablo IV"},
-        };
-
-        private static Dictionary<string, string> Suffix = new Dictionary<string, string>()
+        private static readonly Dictionary<string, string> Suffix = new Dictionary<string, string>()
         {
             {"t", "PTR"},
             {"ptr", "PTR"},
@@ -156,5 +131,30 @@ namespace BNetLib.Helpers
 
             return name;
         }
+
+        public static Dictionary<string, string> Prefix { get; } = new Dictionary<string, string>()
+        {
+            {"proloc", "Overwatch 2"},
+            {"pro", "Overwatch"},
+            {"wowclassic", "World of Warcraft Classic"},
+            {"wow", "World of Warcraft"},
+            {"d3", "Diablo III"},
+            {"hero", "Heroes of the Storm"},
+            {"storm", "Heroes of the Storm (Deprecated)"},
+            {"dst2", "Destiny 2"},
+            {"s1", "Starcraft Remastered"},
+            {"s2", "Starcraft II"},
+            {"w3", "Warcraft III"},
+            {"agent", "Battle.net Agent"},
+            {"bna", "Battle.net App"},
+            {"bts", "Bootstrapper"},
+            {"catalogs", "Game Catalog"},
+            {"hs", "Hearthstone"},
+            {"viper", "Call of Duty Black Ops 4"},
+            {"odin", "Call of Duty Modern Warfare"},
+            {"lazr", "Call of Duty Modern Warfare 2"},
+            {"zeus", "Call of Duty Black Ops Cold War"},
+            {"fenris", "Diablo IV"},
+        };
     }
 }

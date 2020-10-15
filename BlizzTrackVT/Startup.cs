@@ -1,3 +1,4 @@
+using BlizzTrackVT.Services;
 using BTSharedCore.Data;
 using BTSharedCore.Services;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,8 @@ namespace BlizzTrackVT
             services.AddSingleton<Summary>();
             services.AddSingleton<CDN>();
             services.AddSingleton<BGDL>();
+
+            services.AddScoped<NavigationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
