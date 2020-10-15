@@ -44,6 +44,8 @@ namespace BlizzTrackVT
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseStatusCodePagesWithReExecute("/StatusCode", "?statusCode={0}");
+
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -54,6 +54,11 @@
     <tbody>
     @foreach (var item in Model.Summary.Value)
     {
+        if(item.Seqn <= 0)
+        {
+            continue;
+        }
+        
         var last = Model.PreviousSummary?.Value?.FirstOrDefault(x => x.Product == item.Product && x.Flags == item.Flags);
 
         <tr>
