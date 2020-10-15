@@ -115,6 +115,7 @@ namespace BNetLib.Helpers
             {"e8", "Event 8"},
             {"e9", "Event 9"},
             {"e10", "Event 10"},
+            {"event", "Event"},
             {"z", "Submission"},
             {"cn", "China"},
             {"igr", "Internet Game Room"},
