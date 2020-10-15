@@ -135,7 +135,7 @@
                 @if (last != null && item.Cdnconfig != last.Cdnconfig)
                 {
                     <div class="col text-danger">
-                        @last.Keyring
+                        @last.Cdnconfig
                     </div>
                 }
 
@@ -144,9 +144,18 @@
             <div class="row">
                 @if (last != null && item.Keyring != last.Keyring)
                 {
-                    <div>
-                        <i class="fa fa-arrow-up"></i>
-                    </div>
+                    if (last.Keyring != "versions")
+                    {
+                        <div>
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <i class="fa fa-minus"></i>
+                        </div>
+                    }
                 }
                 else
                 {
@@ -168,9 +177,13 @@
                 
                 @if (last != null && item.Keyring != last.Keyring)
                 {
-                    <div class="col text-danger">
-                        @last.Keyring
-                    </div>
+                    if (last.Keyring != "versions")
+                    {
+                        <div class="col text-danger">
+                            @last.Keyring
+                        </div>
+                    }
+
                 }
 
             </div>
