@@ -15,6 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTVT_Worker", "BTVT_Worker\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44A58D94-DDAF-455A-84D3-1C8EE43AB406}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		build.ps1 = build.ps1
 	EndProjectSection
 EndProject

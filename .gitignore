@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 build.ps1
+appsettings.Production.json
