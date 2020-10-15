@@ -25,7 +25,7 @@ namespace BlizzTrackVT.Pages
         public string Product { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int Seqn { get; set; }
+        public int? Seqn { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string File { get; set; }
@@ -45,22 +45,48 @@ namespace BlizzTrackVT.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             switch (File.ToLower())
-            {   
+            {
                 case "cdn":
-                    CDN = await _cdn.Get(Product, Seqn);
+                    if (Seqn != null)
+                    {
+                        CDN = await _cdn.Get(Product, Seqn.Value);
+                    }
+                    else
+                    {
+                        CDN = await _cdn.Latest(Product);
+                    }
+
                     if (CDN == null) return NotFound();
                     break;
                 case "versions":
-                    Versions.Current = await _versions.Get(Product, Seqn);
-                    if (Versions.Current == null) return NotFound();
-                    Versions.Previous = await _versions.Previous(Product, Versions.Current.Seqn) ?? new BTSharedCore.Models.Version()
+                    if (Seqn != null)
                     {
-                        Value = new List<Version>(),
-                        Seqn = 0
-                    };
+                        Versions.Current = await _versions.Get(Product, Seqn.Value);
+                    }
+                    else
+                    {
+                        Versions.Current = await _versions.Latest(Product);
+                    }
+
+                    if (Versions.Current == null) return NotFound();
+                    Versions.Previous = await _versions.Previous(Product, Versions.Current.Seqn) ??
+                                        new BTSharedCore.Models.Version()
+                                        {
+                                            Value = new List<Version>(),
+                                            Seqn = 0
+                                        };
                     break;
                 case "bgdl":
-                    BGDL = await _bgdl.Get(Product, Seqn);
+                    if (Seqn != null)
+                    {
+
+                        BGDL = await _bgdl.Get(Product, Seqn.Value);
+                    }
+                    else
+                    {
+                        BGDL = await _bgdl.Latest(Product);
+                    }
+
                     if (BGDL == null) return NotFound();
                     break;
                 default:

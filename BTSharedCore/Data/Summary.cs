@@ -22,7 +22,7 @@ namespace BTSharedCore.Data
 
         public override async Task<Models.Summary> Previous(string product, int current)
         {
-            return await Collection.Find(x => x.Seqn != current).SortByDescending(x => x.Id).FirstOrDefaultAsync();
+            return await Collection.Find(x => x.Seqn < current).SortByDescending(x => x.Id).FirstOrDefaultAsync();
         }
 
         public override async Task Insert(params Models.Summary[] item)
