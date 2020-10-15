@@ -8,7 +8,7 @@ namespace BlizzTrackVT.Services
     {
         public Dictionary<string, List<BNetLib.Models.Summary>> Create(List<BNetLib.Models.Summary> items)
         {
-            var p = BNetLib.Helpers.GameName.Prefix.Keys;
+            var p = BNetLib.Helpers.GameName.Prefix.Keys.OrderBy(x => x);
 
             var res = new Dictionary<string, List<BNetLib.Models.Summary>>();
 
@@ -16,20 +16,20 @@ namespace BlizzTrackVT.Services
             {
                 var i = new List<BNetLib.Models.Summary>();
 
-                if (prefix == "agent" || prefix == "bts" || prefix == "catalogs")
+                switch (prefix)
                 {
-                    continue;
-                }
+                    case "agent":
+                    case "bts":
+                    case "catalogs":
+                        continue;
+                    case "bna":
+                        i.AddRange(items.Where(x => x.Product == "bna"));
+                        i.AddRange(items.Where(x => x.Product == "catalogs"));
+                        i.AddRange(items.Where(x => x.Product == "agent"));
+                        i.AddRange(items.Where(x => x.Product == "bts"));
+                        res.Add(prefix, i);
 
-                if (prefix == "bna")
-                {
-                    i.AddRange(items.Where(x => x.Product == "bna"));
-                    i.AddRange(items.Where(x => x.Product == "catalogs"));
-                    i.AddRange(items.Where(x => x.Product == "agent"));
-                    i.AddRange(items.Where(x => x.Product == "bts"));
-                    res.Add(prefix, i);
-
-                    continue;
+                        continue;
                 }
 
                 foreach (var item in items)

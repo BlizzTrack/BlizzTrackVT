@@ -116,7 +116,7 @@ namespace BNetLib.Helpers
                 if (!code.StartsWith(s)) continue;
                 name += value1;
 
-                code = code.TrimStart(s.ToCharArray());
+                code = code.Replace(s, "");
                 foreach (var (key, value) in Suffix)
                 {
                     if (code.Equals(key, StringComparison.CurrentCultureIgnoreCase))

@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "module": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "outDir": "./dist/"
+  },
+  "lib": [
+    "dom",
+    "es5",
+    "es2015.promise",
+    "dom.iterable",
+    "esnext"
+  ],
+  "types": [
+    "node",
+  ],
+
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ],
+  "include": [
+    "Scripts/**/*"
+  ]
+}

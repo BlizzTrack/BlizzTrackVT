@@ -7,7 +7,10 @@
       "destination": "wwwroot/lib/font-awesome",
       "files": [
         "css/all.min.css",
-        "js/all.min.js"
+        "js/all.min.js",
+        "webfonts/fa-solid-900.woff",
+        "webfonts/fa-solid-900.woff2",
+        "webfonts/fa-solid-900.svg"
       ]
     }
   ]
