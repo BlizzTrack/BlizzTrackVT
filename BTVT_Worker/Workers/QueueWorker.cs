@@ -63,54 +63,64 @@ namespace BTVT_Worker.Workers
             {
                 while (_running)
                 {
-                    if (_queue.Count == 0)
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                        continue;
-                    }
+                   
+                        if (_queue.Count == 0)
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            continue;
+                        }
 
-                    if (!_queue.TryDequeue(out var item))
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                        continue;
-                    }
+                        if (!_queue.TryDequeue(out var item))
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            continue;
+                        }
 
-                    _logger.LogInformation($"Updating {item.Product} to {item.Seqn}");
-                    switch (item.Flags.ToLower())
-                    {
-                        case "cdn":
-                            var (cdn_value, cdn_seqn) = await _bNetClient.Do<List<BNetLib.Models.CDN>>(
-                                new CDNCommand(item.Product.ToLower()));
-                            await _cdn.Insert(new BTSharedCore.Models.CDN()
+                        try
+                        {
+                            _logger.LogInformation($"Updating {item.Product} to {item.Seqn}");
+                            switch (item.Flags.ToLower())
                             {
-                                Seqn = cdn_seqn,
-                                Value = cdn_value,
-                                Product = item.Product,
-                            });
-                            break;
-                        case "versions":
-                            var (version_value, version_seqn) = await _bNetClient.Do<List<BNetLib.Models.Version>>(
-                                new VersionCommand(item.Product.ToLower()));
+                                case "cdn":
+                                    var (cdn_value, cdn_seqn) = await _bNetClient.Do<List<BNetLib.Models.CDN>>(
+                                        new CDNCommand(item.Product.ToLower()));
+                                    await _cdn.Insert(new BTSharedCore.Models.CDN()
+                                    {
+                                        Seqn = cdn_seqn,
+                                        Value = cdn_value,
+                                        Product = item.Product,
+                                    });
+                                    break;
+                                case "versions":
+                                    var (version_value, version_seqn) =
+                                        await _bNetClient.Do<List<BNetLib.Models.Version>>(
+                                            new VersionCommand(item.Product.ToLower()));
 
-                            await _versions.Insert(new BTSharedCore.Models.Version()
-                            {
-                                Seqn = version_seqn,
-                                Value = version_value,
-                                Product = item.Product,
-                            });
-                            break;
-                        case "bgdl":
-                            var (bgdl_value, bgdl_seqn) = await _bNetClient.Do<List<BNetLib.Models.Version>>(
-                                new BGDLCommand(item.Product.ToLower()));
+                                    await _versions.Insert(new BTSharedCore.Models.Version()
+                                    {
+                                        Seqn = version_seqn,
+                                        Value = version_value,
+                                        Product = item.Product,
+                                    });
+                                    break;
+                                case "bgdl":
+                                    var (bgdl_value, bgdl_seqn) = await _bNetClient.Do<List<BNetLib.Models.Version>>(
+                                        new BGDLCommand(item.Product.ToLower()));
 
-                            await _bgdl.Insert(new BTSharedCore.Models.BGDL()
-                            {
-                                Seqn = bgdl_seqn,
-                                Value = bgdl_value,
-                                Product = item.Product,
-                            });
-                            break;
-                    }
+                                    await _bgdl.Insert(new BTSharedCore.Models.BGDL()
+                                    {
+                                        Seqn = bgdl_seqn,
+                                        Value = bgdl_value,
+                                        Product = item.Product,
+                                    });
+                                    break;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            _queue.Enqueue(item);
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                        }
                 }
             }, _cancellationToken);
         }
