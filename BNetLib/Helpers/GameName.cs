@@ -156,6 +156,7 @@ namespace BNetLib.Helpers
             {"lazr", "Call of Duty Modern Warfare 2"},
             {"zeus", "Call of Duty Black Ops Cold War"},
             {"fenris", "Diablo IV"},
+            {"orbis", "Orbis (Unknown)"},
         };
     }
 }
