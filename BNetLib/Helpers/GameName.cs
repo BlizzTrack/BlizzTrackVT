@@ -95,6 +95,8 @@ namespace BNetLib.Helpers
             {"cn", "China"},
             {"igr", "Internet Game Room"},
             {"livetest", "Live Test"},
+            {"locv1", "Localization 1"},
+            {"locv2", "Localization 2"},
 
         };
 
@@ -135,7 +137,6 @@ namespace BNetLib.Helpers
 
         public static Dictionary<string, string> Prefix { get; } = new Dictionary<string, string>()
         {
-            {"proloc", "Overwatch 2"},
             {"pro", "Overwatch"},
             {"wowclassic", "World of Warcraft Classic"},
             {"wow", "World of Warcraft"},

@@ -37,8 +37,6 @@ namespace BlizzTrackVT.Services
                     if (item.Product.ToLower().Replace("_", "").StartsWith(prefix, StringComparison.CurrentCultureIgnoreCase))
                     {
                         if(item.Product.StartsWith("wow_classic") && prefix == "wow") continue;
-                        if(item.Product.StartsWith("proloc") && prefix == "pro") continue;
-
                         i.Add(item);
                     }
                 }
