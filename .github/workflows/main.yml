@@ -6,8 +6,8 @@ on:
     branches:
       - main
 jobs:
-  push_to_registry:
-    name: Push Docker image to GitHub Packages
+  build_website:
+    name: Push and Build website
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -15,6 +15,8 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
+          context: .
+          file: ./BlizzTrackVT/Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
