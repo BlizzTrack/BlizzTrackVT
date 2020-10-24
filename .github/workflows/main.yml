@@ -24,5 +24,27 @@ jobs:
           context: .
           file: ./BlizzTrackVT/Dockerfile
           registry: docker.pkg.github.com
+          push: true
           tags: |
             blizztrack/blizztrackvt:latest
+  build_worker:
+    name: Push and Build Worker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./BTVT_Worker/Dockerfile
+          registry: docker.pkg.github.com
+          push: true
+          tags: |
+            blizztrack/worker:latest
