@@ -5,8 +5,9 @@ on:
   push:
     branches:
       - main
-jobs:
-  login:
+jobs:   
+  build_website:
+    name: Push and Build website
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Packages Docker Registry
@@ -14,12 +15,7 @@ jobs:
         with:
           registry: docker.pkg.github.com
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}:
-          
-  build_website:
-    name: Push and Build website
-    runs-on: ubuntu-latest
-    steps:
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to GitHub Packages
