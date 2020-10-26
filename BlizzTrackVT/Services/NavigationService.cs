@@ -27,7 +27,6 @@ namespace BlizzTrackVT.Services
                     case "catalogs":
                         continue;
                     case "bna":
-
                         var its = items.Where(x => x.Product == "bna" || x.Product == "catalogs" || x.Product == "agent" || x.Product == "bts");
                         var collection = its as Summary[] ?? its.ToArray();
                         i.AddRange(collection);
