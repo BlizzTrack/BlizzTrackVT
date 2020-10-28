@@ -58,7 +58,7 @@ namespace BlizzTrackVT.Services
             {
                 items.Remove(item);
             }
-
+               
             if (items.Count <= 0) 
                 return res;
 
