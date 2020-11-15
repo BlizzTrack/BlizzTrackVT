@@ -62,7 +62,7 @@ namespace BlizzTrackVT.Services
             if (items.Count <= 0) 
                 return res;
 
-            res.Add("Unknown", items.ToList());
+            res.Add("unknown", items.ToList());
 
             return res;
         }

@@ -158,6 +158,9 @@ namespace BNetLib.Helpers
             {"zeus", "Call of Duty Black Ops Cold War"},
             {"fenris", "Diablo IV"},
             {"orbis", "Orbis (Unknown)"},
+            {"auks", "Auks (Unknown)"},
+            {"fore", "Fore (Unknown)"},
+            {"unknown", "Unknown Game"}
         };
     }
 }
