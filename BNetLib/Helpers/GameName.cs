@@ -39,6 +39,7 @@ namespace BNetLib.Helpers
             {"a", "Alpha"},
             {"demo", "Demo"},
             {"c", "Tournament"},
+            {"r", "BOCW Event" },
             {"ceu", "Tournament (EU)"},
             {"ckr", "Tournament (KR)"},
             {"ccn", "Tournament (CN)"},
@@ -97,7 +98,10 @@ namespace BNetLib.Helpers
             {"livetest", "Live Test"},
             {"locv1", "Localization 1"},
             {"locv2", "Localization 2"},
-
+            {"utr", "User Test Realm" },
+            {"ev", "Esports" },
+            {"cdlevent", "League" },
+            {"cdlstaff", "League Staff" }
         };
 
         public static string GetGameName(string code)
